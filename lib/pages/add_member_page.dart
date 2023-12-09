@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pegawai_app/database/supabase_db.dart';
@@ -19,6 +22,8 @@ class _AddMemberPageState extends State<AddMemberPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
 
+  String? staffPicturePath;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +41,50 @@ class _AddMemberPageState extends State<AddMemberPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                InkWell(
+                  onTap: () async {
+                    FilePickerResult? result =
+                        await FilePicker.platform.pickFiles();
+
+                    setState(() {
+                      try {
+                        staffPicturePath = result!.files.single.path!;
+                      } catch (e) {
+                        print(e);
+                      }
+                    });
+                  },
+                  child: (staffPicturePath == null)
+                      ? Container(
+                          width: 200,
+                          height: 200,
+                          padding: const EdgeInsets.all(32.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            // color: Theme.of(context).colorScheme.surfaceVariant,
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                          child: const Center(
+                            child: Text('Upload Image'),
+                          ),
+                        )
+                      : Container(
+                          width: 200,
+                          height: 200,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            // color: Theme.of(context).colorScheme.surfaceVariant,
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                          child: Image.file(
+                            // Display the selected image
+                            File(staffPicturePath!),
+                            height: 200,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                ),
+                const SizedBox(height: 16.0),
                 TextField(
                   controller: nameController,
                   decoration: const InputDecoration(
@@ -85,9 +134,15 @@ class _AddMemberPageState extends State<AddMemberPage> {
                         // Show an error message or snackbar indicating the fields are required
                         return;
                       }
+
+                      File? image;
+                      if (staffPicturePath != null) {
+                        image = File(staffPicturePath!);
+                      }
+
                       // Create a new staff member
                       final newMember = StaffMember(
-                        staff_member_id: const Uuid().v1(),
+                        staffMemberId: const Uuid().v1(),
                         name: nameController.text,
                         position: positionController.text,
                         salary: int.parse(salaryController.text),
@@ -96,7 +151,8 @@ class _AddMemberPageState extends State<AddMemberPage> {
                       );
 
                       // Insert the new member into the database
-                      await supabaseDatabase.createStaffMember(newMember);
+                      await supabaseDatabase.createStaffMember(newMember,
+                          staffPicture: image);
                     } catch (e) {
                       print(e);
                     }

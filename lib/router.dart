@@ -1,8 +1,9 @@
 import 'package:go_router/go_router.dart';
+import 'package:pegawai_app/model/staff_member.dart';
 import 'package:pegawai_app/pages/add_member_page.dart';
 import 'package:pegawai_app/pages/edit_member_page.dart';
 import 'package:pegawai_app/pages/home_page.dart';
-import 'package:pegawai_app/pages/member_detail.dart';
+import 'package:pegawai_app/pages/detail_member_page.dart';
 import 'package:pegawai_app/pages/not_found_page.dart';
 import 'package:pegawai_app/pages/splash_page.dart';
 
@@ -26,17 +27,19 @@ final router = GoRouter(
       builder: (context, state) => const NotFoundPage(),
     ),
     GoRoute(
-      path: '/member/edit/:staff_member_id',
+      path: '/member/edit',
       name: 'member_edit',
       builder: (context, state) {
-        String? staffMemberId = state.pathParameters['staff_member_id'];
+        final map = state.extra as Map<String, dynamic>;
+        StaffMember? staffMember = map['staff_member'];
 
-        if (staffMemberId == null) {
+        print(staffMember?.toJson());
+
+        if (staffMember.runtimeType != StaffMember) {
           return const NotFoundPage();
         }
 
-        return EditMemberPage(
-            staffMemberId: state.pathParameters['staff_member_id']!);
+        return EditMemberPage(staffMember: staffMember!);
       },
     ),
     GoRoute(

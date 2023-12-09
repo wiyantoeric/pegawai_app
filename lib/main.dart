@@ -6,7 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
 
-  const supabaseUrl = 'https://lkupxvuaxwhnjfdcrnte.supabase.co';
+  final supabaseUrl = dotenv.get('SUPABASE_URL');
   final supabaseKey = dotenv.get('SUPABASE_KEY');
 
   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);

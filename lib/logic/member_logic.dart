@@ -6,7 +6,7 @@ Future<StaffMember> fetchMemberDetails({required String staffMemberId}) async {
       await SupabaseDatabase().readAllStaffMembers() as List<StaffMember>;
 
   final StaffMember foundMember = staffMembers
-      .firstWhere((member) => member.staff_member_id == staffMemberId);
+      .firstWhere((member) => member.staffMemberId == staffMemberId);
 
   return foundMember;
 }

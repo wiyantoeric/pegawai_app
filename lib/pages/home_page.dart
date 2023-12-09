@@ -114,8 +114,8 @@ class _HomePageState extends State<HomePage> {
                                       context.goNamed(
                                         'member_detail',
                                         pathParameters: {
-                                          'staff_member_id': staffMembers[index]
-                                              .staff_member_id
+                                          'staff_member_id':
+                                              staffMembers[index].staffMemberId
                                         },
                                       );
                                     },
