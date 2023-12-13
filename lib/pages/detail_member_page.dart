@@ -72,7 +72,7 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
               ),
             ],
           ),
-          SliverToBoxAdapter(
+          SliverFillRemaining(
             child: FutureBuilder<StaffMember>(
               future: fetchMemberDetails(staffMemberId: widget.staffMemberId),
               builder: (context, snapshot) {
@@ -82,8 +82,7 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
                   return Text('Error: ${snapshot.error}');
                 }
 
-                  staffMember = snapshot.data!;
-                
+                staffMember = snapshot.data!;
 
                 return Padding(
                   padding: const EdgeInsets.all(24.0),
@@ -104,6 +103,31 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
                                       height: 200,
                                       fit: BoxFit.cover,
                                       isAntiAlias: true,
+                                      loadingBuilder:
+                                          (context, child, loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        }
+                                        return Container(
+                                          width: 150,
+                                          height: 200,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .surfaceVariant,
+                                          child: Center(
+                                            child: CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     )
                                   : Container(
                                       width: 150,

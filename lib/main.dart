@@ -26,7 +26,7 @@ class PegawaiApp extends StatelessWidget {
       title: 'Pegawai App',
       routerConfig: router,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFFB97D)),
         useMaterial3: true,
       ),
     );
