@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class SplashPage extends StatefulWidget {
-  SplashPage();
+  const SplashPage({super.key});
 
   @override
   _SplashPageState createState() => _SplashPageState();
@@ -20,7 +20,7 @@ class _SplashPageState extends State<SplashPage>
     super.initState();
 
     _animationController = AnimationController(
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
 
@@ -29,7 +29,7 @@ class _SplashPageState extends State<SplashPage>
 
     _animationController.forward();
 
-    Timer(Duration(milliseconds: 1500), () {
+    Timer(const Duration(milliseconds: 1500), () {
       context.go('/');
     });
   }
@@ -68,11 +68,11 @@ class _SplashPageState extends State<SplashPage>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Pegawai App',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   AnimatedBuilder(
                     animation: _progressAnimation,
                     builder: (context, child) {

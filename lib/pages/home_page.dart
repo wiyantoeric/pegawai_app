@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               _connectivityResult == ConnectivityResult.none
-                  ? SliverToBoxAdapter(
+                  ? const SliverToBoxAdapter(
                       child: Center(
                         child: Text('There is no internet connection'),
                       ),
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return SliverFillRemaining(
+                          return const SliverFillRemaining(
                               child:
                                   Center(child: CircularProgressIndicator()));
                         } else if (snapshot.hasError) {

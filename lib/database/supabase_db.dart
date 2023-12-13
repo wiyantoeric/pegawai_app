@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/widgets.dart';
 import 'package:pegawai_app/model/staff_member.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -80,12 +79,10 @@ class SupabaseDatabase {
   Future<String?> uploadStaffMemberPicture(
       String staffMemberId, File image) async {
     try {
-      await supabase.storage
-          .from('staff_picture')
-          .upload(staffMemberId, image, fileOptions: FileOptions(upsert: true));
-      final publicUrl = await supabase.storage
-          .from('staff_picture')
-          .getPublicUrl(staffMemberId);
+      await supabase.storage.from('staff_picture').upload(staffMemberId, image,
+          fileOptions: const FileOptions(upsert: true));
+      final publicUrl =
+          supabase.storage.from('staff_picture').getPublicUrl(staffMemberId);
       return publicUrl;
     } catch (e) {
       print(e);
@@ -96,9 +93,8 @@ class SupabaseDatabase {
 
   Future<File?> getStaffMemberPicture(String staffMemberId) async {
     try {
-      final publicUrl = await supabase.storage
-          .from('staff_picture')
-          .getPublicUrl(staffMemberId);
+      final publicUrl =
+          supabase.storage.from('staff_picture').getPublicUrl(staffMemberId);
       return File.fromUri(Uri.parse(publicUrl));
     } catch (e) {
       print(e);

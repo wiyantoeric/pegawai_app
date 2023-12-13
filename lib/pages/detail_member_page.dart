@@ -7,7 +7,7 @@ import 'package:pegawai_app/model/staff_member.dart';
 class MemberDetailPage extends StatefulWidget {
   final String staffMemberId;
 
-  MemberDetailPage({required this.staffMemberId});
+  const MemberDetailPage({super.key, required this.staffMemberId});
 
   @override
   State<MemberDetailPage> createState() => _MemberDetailPageState();
@@ -22,37 +22,37 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            title: Text('Staff Member Details'),
+            title: const Text('Staff Member Details'),
             leading: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 context.go('/');
               },
             ),
             actions: [
               IconButton(
-                icon: Icon(Icons.edit),
+                icon: const Icon(Icons.edit),
                 onPressed: () {
                   context.goNamed('member_edit',
                       extra: {'staff_member': staffMember});
                 },
               ),
               IconButton(
-                icon: Icon(Icons.delete, color: Colors.red),
+                icon: const Icon(Icons.delete, color: Colors.red),
                 onPressed: () {
                   showDialog(
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text('Remove Member'),
-                        content: Text(
+                        title: const Text('Remove Member'),
+                        content: const Text(
                             'Are you sure you want to remove this member?'),
                         actions: [
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text('Cancel'),
+                            child: const Text('Cancel'),
                           ),
                           TextButton(
                             onPressed: () async {
@@ -62,7 +62,7 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
                                 context.go('/');
                               });
                             },
-                            child: Text('Remove'),
+                            child: const Text('Remove'),
                           ),
                         ],
                       );
@@ -77,7 +77,7 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
               future: fetchMemberDetails(staffMemberId: widget.staffMemberId),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 }
@@ -89,7 +89,7 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       SizedBox(
                         width: double.infinity,
                         child: Row(
@@ -132,9 +132,6 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
                                   : Container(
                                       width: 150,
                                       height: 200,
-                                      child: Center(
-                                        child: Text('No Image'),
-                                      ),
                                       decoration: BoxDecoration(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -145,6 +142,9 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
                                                 .outline),
                                         borderRadius:
                                             BorderRadius.circular(8.0),
+                                      ),
+                                      child: const Center(
+                                        child: Text('No Image'),
                                       ),
                                     ),
                             ),
@@ -160,16 +160,16 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
                                           .textTheme
                                           .titleLarge,
                                     ),
-                                    SizedBox(height: 4),
+                                    const SizedBox(height: 4),
                                     Text(staffMember.position,
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelLarge),
-                                    SizedBox(height: 20),
+                                    const SizedBox(height: 20),
                                     Text('Salary: ${staffMember.salary}'),
-                                    SizedBox(height: 4),
+                                    const SizedBox(height: 4),
                                     Text('Email: ${staffMember.email}'),
-                                    SizedBox(height: 4),
+                                    const SizedBox(height: 4),
                                     Text(
                                         'Phone Number: ${staffMember.phoneNumber}'),
                                   ],

@@ -12,7 +12,7 @@ final router = GoRouter(
   routes: <GoRoute>[
     GoRoute(
       path: '/splash',
-      builder: (context, state) => SplashPage(),
+      builder: (context, state) => const SplashPage(),
     ),
     GoRoute(
       path: '/',
